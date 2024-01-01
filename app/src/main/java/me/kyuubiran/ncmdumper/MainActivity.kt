@@ -22,6 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -59,18 +61,20 @@ private fun RequireAllFileAccessPermissionDialog(activity: Activity) {
 
     var showed by remember { mutableStateOf(!Environment.isExternalStorageManager()) }
 
-    val lifecycle = object : DefaultLifecycleObserver {
-        override fun onResume(owner: LifecycleOwner) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val lifecycle = LifecycleEventObserver { _, e ->
+            if (e != Lifecycle.Event.ON_RESUME)
+                return@LifecycleEventObserver
+
             if (Build.VERSION.SDK_INT < 30)
-                return
+                return@LifecycleEventObserver
 
             if (showed) {
                 showed = !Environment.isExternalStorageManager()
             }
         }
-    }
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(Unit) {
+
         lifecycleOwner.lifecycle.addObserver(lifecycle)
         onDispose { lifecycleOwner.lifecycle.removeObserver(lifecycle) }
     }
