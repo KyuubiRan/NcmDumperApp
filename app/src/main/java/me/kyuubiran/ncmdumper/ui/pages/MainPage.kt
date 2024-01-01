@@ -1,7 +1,8 @@
-package me.kyuubiran.ncmdumper.ui.fragments
+package me.kyuubiran.ncmdumper.ui.pages
 
 import android.net.Uri
 import android.os.Environment
+import android.util.Dumpable
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,6 +24,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +44,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.kyuubiran.ncmdumper.MainActivity
 import me.kyuubiran.ncmdumper.R
+import me.kyuubiran.ncmdumper.ui.utils.Dumper
 import me.kyuubiran.ncmdumper.ui.views.NcmFileInfo
 import me.kyuubiran.ncmdumper.ui.views.NcmFileItem
 import java.io.File
@@ -51,15 +55,7 @@ object MainPage {
     private val list = mutableStateListOf<File>()
 
     private fun reloadFiles() {
-        val sdCard = Environment.getExternalStorageDirectory()
-        val cloudMusicDir =
-            Uri.parse(sdCard.toString())
-                .buildUpon()
-                .appendPath("netease")
-                .appendPath("cloudmusic")
-                .appendPath("Music").build()
-
-        val f = File(cloudMusicDir.toString())
+        val f = File(Dumper.DEFAULT_NETEASE_MUSIC_PATH)
         list.clear()
         if (!f.exists() || !f.isDirectory)
             return
@@ -72,9 +68,31 @@ object MainPage {
         Log.i("MainFragment", "Found ${list.size} ncm files")
     }
 
-    init {
-        reloadFiles()
+    private fun reloadFilesFullDisk() {
+        val f = Environment.getExternalStorageDirectory()
+
+        list.clear()
+
+        fun doSearch(f: File) {
+            if (!f.exists())
+                return
+
+            if (f.isDirectory) {
+                f.listFiles()?.forEach {
+                    doSearch(it)
+                }
+            } else {
+                if (f.extension.lowercase() == "ncm")
+                    list += f
+            }
+        }
+
+        doSearch(f)
     }
+
+//    init {
+//        reloadFiles()
+//    }
 
     @Composable
     private fun AppBar(controller: NavHostController) {
@@ -129,7 +147,9 @@ object MainPage {
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun NcmFileList() {
+    private fun NcmFileList(activity: MainActivity) {
+        val sp = activity.sp
+
         val refreshScope = rememberCoroutineScope()
         var refreshing by remember { mutableStateOf(false) }
 
@@ -137,13 +157,20 @@ object MainPage {
             refreshing = true
             val beg = System.currentTimeMillis()
             withContext(Dispatchers.IO) {
-                reloadFiles()
+                if (sp.getBoolean("search_full_disk", false))
+                    reloadFilesFullDisk()
+                else
+                    reloadFiles()
             }
             val end = System.currentTimeMillis()
             if (end - beg < 500)
                 delay(500 - (end - beg))
 
             refreshing = false
+        }
+
+        LaunchedEffect("refresh") {
+            refresh()
         }
 
         val state = rememberPullRefreshState(refreshing, ::refresh)
@@ -166,10 +193,10 @@ object MainPage {
     }
 
     @Composable
-    fun View(controller: NavHostController) {
+    fun View(controller: NavHostController, activity: MainActivity) {
         Column {
             AppBar(controller)
-            NcmFileList()
+            NcmFileList(activity)
         }
     }
 }

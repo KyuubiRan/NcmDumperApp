@@ -26,4 +26,12 @@
     <string name="nothing_here">空空如也~</string>
     <string name="search">搜索</string>
     <string name="back">返回</string>
+    <string name="title_config_set_output_folder">设置输出目录</string>
+    <string name="title_config_search_full_disk">全盘搜索</string>
+    <string name="subtitle_config_search_full_disk">全盘搜索.ncm文件，否则仅搜索网易云音乐的下载目录。</string>
+    <string name="title_dumper">导出</string>
+    <string name="title_about">关于</string>
+    <string name="title_version">版本</string>
+    <string name="title_config_goto_github_page">前往Github浏览项目</string>
+    <string name="subtitle_config_goto_github_page">点个Star吧 :)</string>
 </resources>

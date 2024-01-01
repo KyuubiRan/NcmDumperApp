@@ -2,6 +2,7 @@ package me.kyuubiran.ncmdumper
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -25,14 +26,17 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import me.kyuubiran.ncmdumper.ui.fragments.MainPage
-import me.kyuubiran.ncmdumper.ui.fragments.SettingsPage
+import me.kyuubiran.ncmdumper.ui.pages.MainPage
+import me.kyuubiran.ncmdumper.ui.pages.SettingsPage
 import me.kyuubiran.ncmdumper.ui.theme.MyTheme
 
 class MainActivity : ComponentActivity() {
+    lateinit var sp: SharedPreferences
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sp = getSharedPreferences("settings", Activity.MODE_PRIVATE)
 
         enableEdgeToEdge()
         setContent {
@@ -40,8 +44,8 @@ class MainActivity : ComponentActivity() {
             MyTheme {
                 RequireAllFileAccessPermissionDialog(this)
                 NavHost(navController = navController, startDestination = "main_page") {
-                    composable("main_page") { MainPage.View(navController) }
-                    composable("settings_page") { SettingsPage.View(navController) }
+                    composable("main_page") { MainPage.View(navController, this@MainActivity) }
+                    composable("settings_page") { SettingsPage.View(navController, this@MainActivity) }
                 }
             }
         }
