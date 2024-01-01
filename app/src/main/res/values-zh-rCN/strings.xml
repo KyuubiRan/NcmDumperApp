@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ncm Dumper</string>
+    <string name="settings">设置</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="title_dialog_require_all_file_access_permission">授权访问所有文件</string>
+    <string name="message_dialog_require_all_file_access_permission">授予访问所有文件的权限来获取.ncm文件列表</string>
+    <string name="refresh">刷新</string>
+    <string name="file_size">大小: %.2fM</string>
+    <string name="title_dialog_confirm_dump">导出歌曲</string>
+    <string name="message_dialog_confirm_dump">确认导出歌曲 %s ？</string>
+    <string name="message_dialog_exporting">导出中…</string>
+    <string name="title_dialog_dump_success">导出成功</string>
+    <string name="title_dialog_dump_failed">导出失败</string>
+    <string name="message_dialog_dump_success">已成功导出歌曲。</string>
+    <string name="message_dialog_dump_failed_invalid_input_file">错误：无效的输入流！</string>
+    <string name="message_dialog_dump_failed_invalid_output_folder">错误：无效的输出文件夹！</string>
+    <string name="message_dialog_dump_failed_file_not_ncm_file">错误：Ncm文件头校验失败，此文件可能不是.ncm格式的文件！</string>
+    <string name="message_dialog_dump_failed_file_unknow_format">错误：未知的音乐格式！</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_info">错误：无法读取歌曲信息！</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_cover">错误：无法读取歌曲封面信息！</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_data">错误：无法读取歌曲数据！</string>
+    <string name="message_dialog_dump_failed_file_cannot_save_output_file">错误：无法保存输出文件！</string>
+    <string name="message_dialog_dump_failed_unknown">错误：未知错误！</string>
+    <string name="nothing_here">空空如也~</string>
+    <string name="search">搜索</string>
+    <string name="back">返回</string>
+</resources>

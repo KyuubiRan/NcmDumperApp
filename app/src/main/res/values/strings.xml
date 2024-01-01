@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Ncm Dumper</string>
+    <string name="settings">Settings</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_dialog_require_all_file_access_permission">Require all file access permission</string>
+    <string name="message_dialog_require_all_file_access_permission">Grant all file access permisson to find .ncm files</string>
+    <string name="refresh">Refresh</string>
+    <string name="file_size">Size: %.2fM</string>
+    <string name="title_dialog_confirm_dump">Dump music</string>
+    <string name="message_dialog_confirm_dump">Do you want to dump music %s ?</string>
+    <string name="message_dialog_exporting">Dumping…</string>
+    <string name="title_dialog_dump_success">Dump succeed</string>
+    <string name="title_dialog_dump_failed">Dump failed</string>
+    <string name="message_dialog_dump_success">Dump music file succeed.</string>
+    <string name="message_dialog_dump_failed_invalid_input_file">Error: Invalid input stream!</string>
+    <string name="message_dialog_dump_failed_invalid_output_folder">Error: Invalid output folder</string>
+    <string name="message_dialog_dump_failed_file_not_ncm_file">Error: Ncm header check failed, this file may not .ncm file!</string>
+    <string name="message_dialog_dump_failed_file_unknow_format">Error: Unknown music file format!</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_info">Error: Cannot read music info!</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_cover">Error: Cannot read music cover data!</string>
+    <string name="message_dialog_dump_failed_file_cannot_read_music_data">Error: Cannot read music data!</string>
+    <string name="message_dialog_dump_failed_file_cannot_save_output_file">Error: Cannot save output file!</string>
+    <string name="message_dialog_dump_failed_unknown">Error: Unknown error!</string>
+    <string name="nothing_here">Nothing here~</string>
+    <string name="search">Search</string>
+    <string name="back">Back</string>
+</resources>
