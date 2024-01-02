@@ -1,8 +1,6 @@
 package me.kyuubiran.ncmdumper.ui.pages
 
-import android.net.Uri
 import android.os.Environment
-import android.util.Dumpable
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -90,15 +88,10 @@ object MainPage {
         doSearch(f)
     }
 
-//    init {
-//        reloadFiles()
-//    }
-
     @Composable
     private fun AppBar(controller: NavHostController) {
         var moreShowed by remember { mutableStateOf(false) }
         TopAppBar(
-            modifier = Modifier.statusBarsPadding(),
             title = { Text(text = stringResource(id = R.string.app_name)) },
             actions = {
                 Box(
@@ -147,8 +140,8 @@ object MainPage {
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    private fun NcmFileList(activity: MainActivity) {
-        val sp = activity.sp
+    private fun NcmFileList() {
+        val sp = MainActivity.sp
 
         val refreshScope = rememberCoroutineScope()
         var refreshing by remember { mutableStateOf(false) }
@@ -196,7 +189,7 @@ object MainPage {
     fun View(controller: NavHostController, activity: MainActivity) {
         Column {
             AppBar(controller)
-            NcmFileList(activity)
+            NcmFileList()
         }
     }
 }

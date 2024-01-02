@@ -1,5 +1,6 @@
 package me.kyuubiran.ncmdumper.ui.views
 
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -26,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.kyuubiran.ncmdumper.MainActivity
 import me.kyuubiran.ncmdumper.R
 import me.kyuubiran.ncmdumper.ui.utils.Dumper.dumpNcmFile
 import java.io.File
@@ -46,6 +49,8 @@ data class NcmFileInfo(val file: File) {
 
 @Composable
 private fun ConfirmDumpDialog(show: Boolean, fileInfo: NcmFileInfo, onDismiss: () -> Unit) {
+    val sp = LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+
     var exportResult by remember { mutableIntStateOf(-1) }
     var exportingDialogShow by remember { mutableStateOf(false) }
     var exportResultDialogShow by remember { mutableStateOf(false) }
@@ -55,7 +60,8 @@ private fun ConfirmDumpDialog(show: Boolean, fileInfo: NcmFileInfo, onDismiss: (
             exportingDialogShow = true
             withContext(Dispatchers.IO) {
                 val beg = System.currentTimeMillis()
-                exportResult = dumpNcmFile(fileInfo.filePath, fileInfo.file.parent ?: "")
+                val output = sp.getString("output_path", fileInfo.file.parent ?: "") ?: ""
+                exportResult = dumpNcmFile(fileInfo.filePath, output)
                 val end = System.currentTimeMillis()
                 if (end - beg < 500) delay(500 - (end - beg))
             }

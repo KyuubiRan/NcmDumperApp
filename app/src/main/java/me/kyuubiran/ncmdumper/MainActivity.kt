@@ -10,6 +10,8 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -19,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -33,8 +36,11 @@ import me.kyuubiran.ncmdumper.ui.pages.SettingsPage
 import me.kyuubiran.ncmdumper.ui.theme.MyTheme
 
 class MainActivity : ComponentActivity() {
-    lateinit var sp: SharedPreferences
-        private set
+
+    companion object {
+        lateinit var sp: SharedPreferences
+            private set
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +51,11 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             MyTheme {
                 RequireAllFileAccessPermissionDialog(this)
-                NavHost(navController = navController, startDestination = "main_page") {
-                    composable("main_page") { MainPage.View(navController, this@MainActivity) }
-                    composable("settings_page") { SettingsPage.View(navController, this@MainActivity) }
+                Box(modifier = Modifier.statusBarsPadding()) {
+                    NavHost(navController = navController, startDestination = "main_page") {
+                        composable("main_page") { MainPage.View(navController, this@MainActivity) }
+                        composable("settings_page") { SettingsPage.View(navController, this@MainActivity) }
+                    }
                 }
             }
         }

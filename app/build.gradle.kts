@@ -12,8 +12,8 @@ android {
         applicationId = "me.kyuubiran.ncmdumper"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = 2
+        versionName = "0.2"
 
         buildFeatures {
             buildConfig = true

@@ -48,7 +48,6 @@ object SettingsPage {
     @Composable
     private fun AppBar(navController: NavHostController) {
         TopAppBar(
-            modifier = Modifier.statusBarsPadding(),
             title = {
                 Row {
                     Image(
@@ -67,7 +66,7 @@ object SettingsPage {
 
     @Composable
     private fun Configs(activity: MainActivity) {
-        val sp = activity.sp
+        val sp = MainActivity.sp
         var outputFolder by remember { mutableStateOf(sp.getString("output_path", Dumper.DEFAULT_NETEASE_MUSIC_PATH)!!) }
 
         val folderPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -94,11 +93,13 @@ object SettingsPage {
                 fontSize = 18.sp
             )
 
+            var searchFullDiskEnabled by remember { mutableStateOf(sp.getBoolean("search_full_disk", false)) }
             SwitchConfigItem(
                 title = stringResource(id = R.string.title_config_search_full_disk),
                 subtitle = stringResource(id = R.string.subtitle_config_search_full_disk),
-                isChecked = false,
+                isChecked = searchFullDiskEnabled,
                 onChanged = {
+                    searchFullDiskEnabled = it
                     sp.edit().putBoolean("search_full_disk", it).apply()
                 }
             )
@@ -152,13 +153,14 @@ object SettingsPage {
 private fun BaseConfigItem(
     title: String,
     subtitle: String? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit) = {},
     rightView: @Composable () -> Unit = {
         Text(text = ">", fontSize = 20.sp, color = Color.Gray)
     }
 ) {
-    Box(modifier = Modifier
-        .apply { if (onClick != null) clickable(onClick = onClick) }
+    Box(
+        modifier = Modifier
+            .clickable(onClick = onClick)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -195,17 +197,12 @@ private fun SwitchConfigItem(
     isChecked: Boolean,
     onChanged: (Boolean) -> Unit = {},
 ) {
-    var checked by remember { mutableStateOf(isChecked) }
-
     BaseConfigItem(
         title = title,
         subtitle = subtitle,
-        onClick = { checked = !checked },
+        onClick = { onChanged(!isChecked) },
         rightView = {
-            Switch(checked = checked, onCheckedChange = {
-                checked = !checked
-                onChanged(checked)
-            })
+            Switch(checked = isChecked, onCheckedChange = { onChanged(!isChecked) })
         }
     )
 }
