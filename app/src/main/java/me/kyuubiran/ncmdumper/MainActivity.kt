@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             MyTheme {
                 RequireAllFileAccessPermissionDialog(this)
-                Box(modifier = Modifier.statusBarsPadding()) {
+                Box(modifier = Modifier.safeDrawingPadding()) {
                     NavHost(navController = navController, startDestination = "main_page") {
                         composable("main_page") { MainPage.View(navController, this@MainActivity) }
                         composable("settings_page") { SettingsPage.View(navController, this@MainActivity) }
