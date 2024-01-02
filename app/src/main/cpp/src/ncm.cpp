@@ -127,6 +127,7 @@ NcmDumpError ncm_dump(std::ifstream &input, std::filesystem::path &outputFolder)
 
     std::string metaJsonString(decMeta.begin(), decMeta.end());
     metaJsonString = metaJsonString.substr(6); // substring `music:`
+    metaJsonString.erase(metaJsonString.find_last_of('}') + 1); // fix '\a' at the end of string
     auto metaJson = nlohmann::json::parse(metaJsonString);
     std::string fileFormat = metaJson["format"];
     std::transform(fileFormat.begin(), fileFormat.end(), fileFormat.begin(),
