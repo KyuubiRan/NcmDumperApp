@@ -8,7 +8,11 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
@@ -42,6 +47,7 @@ import androidx.navigation.NavHostController
 import me.kyuubiran.ncmdumper.BuildConfig
 import me.kyuubiran.ncmdumper.MainActivity
 import me.kyuubiran.ncmdumper.R
+import me.kyuubiran.ncmdumper.ui.theme.BackGroundColor
 import me.kyuubiran.ncmdumper.ui.utils.Dumper
 
 object SettingsPage {
@@ -83,7 +89,14 @@ object SettingsPage {
             }
         }
 
-        Column(modifier = Modifier.fillMaxSize()) {
+
+        val scrollable = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .scrollable(state = scrollable, orientation = Orientation.Horizontal)
+                .background(BackGroundColor)
+        ) {
             // region Dumper
             Text(
                 modifier = Modifier
@@ -172,7 +185,7 @@ private fun BaseConfigItem(
                     .padding(8.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = title, fontSize = 18.sp)
+                Text(text = title, fontSize = 18.sp, color = if (isSystemInDarkTheme()) Color.White else Color.Black)
                 if (!subtitle.isNullOrBlank())
                     Text(text = subtitle, fontSize = 14.sp, color = Color.Gray)
             }

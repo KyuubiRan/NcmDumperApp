@@ -6,7 +6,6 @@
     <string name="title_dialog_require_all_file_access_permission">Require all file access permission</string>
     <string name="message_dialog_require_all_file_access_permission">Grant all file access permisson to find .ncm files</string>
     <string name="refresh">Refresh</string>
-    <string name="file_size">Size: %.2fM</string>
     <string name="title_dialog_confirm_dump">Dump music</string>
     <string name="message_dialog_confirm_dump">Do you want to dump music %s ?</string>
     <string name="message_dialog_exporting">Dumping…</string>
@@ -24,6 +23,7 @@
     <string name="message_dialog_dump_failed_unknown">Error: Unknown error!</string>
     <string name="nothing_here">Nothing here~</string>
     <string name="search">Search</string>
+    <string name="search_with_ellipsis">Search…</string>
     <string name="back">Back</string>
     <string name="title_config_set_output_folder">Set output folder</string>
     <string name="title_config_search_full_disk">Search full disk</string>

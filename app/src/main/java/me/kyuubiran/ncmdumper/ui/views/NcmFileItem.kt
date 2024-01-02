@@ -1,8 +1,8 @@
 package me.kyuubiran.ncmdumper.ui.views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Card
@@ -31,20 +30,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.kyuubiran.ncmdumper.MainActivity
 import me.kyuubiran.ncmdumper.R
 import me.kyuubiran.ncmdumper.ui.utils.Dumper.dumpNcmFile
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+@SuppressLint("SimpleDateFormat", "ConstantLocale")
+val fmt = SimpleDateFormat("yy-MM-dd HH:mm", Locale.getDefault())
 
 data class NcmFileInfo(val file: File) {
     val fileName: String = file.name
     val filePath: String = file.path
     val fileSize = file.length()
+    val createDate: String = fmt.format(file.lastModified())
 }
 
 @Composable
@@ -165,12 +168,11 @@ fun NcmFileItem(fileInfo: NcmFileInfo) {
                     maxLines = 1,
                     modifier = Modifier.basicMarquee(),
                     text = fileInfo.fileName,
-                    color = Color.Black,
                     fontSize = 18.sp
                 )
                 Text(
                     maxLines = 1,
-                    text = stringResource(id = R.string.file_size).format(fileInfo.fileSize / 1024.00 / 1024.00),
+                    text = "${fileInfo.createDate} | ${String.format("%.2f", fileInfo.fileSize / 1024.00 / 1024.00)}MB",
                     color = Color.Gray,
                     fontSize = 14.sp
                 )

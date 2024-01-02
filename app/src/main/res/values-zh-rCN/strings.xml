@@ -7,7 +7,6 @@
     <string name="title_dialog_require_all_file_access_permission">授权访问所有文件</string>
     <string name="message_dialog_require_all_file_access_permission">授予访问所有文件的权限来获取.ncm文件列表</string>
     <string name="refresh">刷新</string>
-    <string name="file_size">大小: %.2fM</string>
     <string name="title_dialog_confirm_dump">导出歌曲</string>
     <string name="message_dialog_confirm_dump">确认导出歌曲 %s ？</string>
     <string name="message_dialog_exporting">导出中…</string>
@@ -34,4 +33,5 @@
     <string name="title_version">版本</string>
     <string name="title_config_goto_github_page">前往Github浏览项目</string>
     <string name="subtitle_config_goto_github_page">点个Star吧 :)</string>
+    <string name="search_with_ellipsis">搜索…</string>
 </resources>
